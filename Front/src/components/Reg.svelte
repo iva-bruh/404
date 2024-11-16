@@ -1,9 +1,63 @@
     <script>
+        import { isAuthenticated } from "../store.js";
+        import { onMount } from "svelte";
+        onMount( async () => {
+            try {
+                let response = await fetch("http://localhost:8000/auth/status", {
+                    credentials: "include",
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    isAuthenticated.set(data.authenticated);
+                } else {
+                    isAuthenticated.set(false);
+                }
+                if ($isAuthenticated) {
+                    window.location.href = "/"
+                }
+            } catch(e) {
+                console.log(e);
+            }
+        })
         let email = '';
         let password = '';
         let confirmPassword = '';
+        let passwordConfirmed = true;
         import Header from "./Header.svelte";
         import Footer from "./Footer.svelte";
+        let Register = async () => {
+            if (password == confirmPassword) {
+                let response = await fetch("http://localhost:8000/users", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                    },
+                    body: JSON.stringify({
+                        "email": email,
+                        "password": password,
+                    })
+                })
+                let data = await response.json();
+                console.log(data)
+
+                const formData = new FormData();
+                formData.append('username', email);
+                formData.append('password', password);
+                response = await fetch("http://localhost:8000/login", {
+                    credentials: "include",
+                    method: "POST",
+                    body: formData
+                })
+                if (response.ok) {
+                    let data = await response.json();
+                    console.log(data);
+                    window.location.href = "/cabinet";
+                }
+            } else {
+                passwordConfirmed = false;
+            }
+        }
     </script>
     <Header />
 
@@ -60,6 +114,7 @@
 
         .error {
             color: red;
+
             font-size: 12px;
             margin-top: 5px;
         }
@@ -80,7 +135,10 @@
                 <label for="confirmPassword">Подтвердите пароль:</label>
                 <input type="password" id="confirmPassword" bind:value={confirmPassword} required />
             </div>
-            <button type="submit">Зарегистрироваться</button>
+            {#if !passwordConfirmed}
+            <div class="error">Пароли не совпадают!</div>
+            {/if}
+            <button type="submit" on:click={Register}>Зарегистрироваться</button>
         </form>
     </div>
     <Footer isMainPage="true"/>
