@@ -135,7 +135,7 @@
 
     .message {
         text-align: center;
-        color: #ff5722;
+        color: #0ba00b;
         font-weight: bold;
         margin: 10px 0;
     }
@@ -163,7 +163,7 @@
 
     .remove-button {
         cursor: pointer;
-        background-color: #f44336;
+        background-color: #08a549;
         border: none;
         color: white;
         padding: 5px 10px;
@@ -172,7 +172,7 @@
     }
 
     .remove-button:hover {
-        background-color: #d32f2f;
+        background-color: #992f0b;
     }
 
     @media (max-width: 700px) {
