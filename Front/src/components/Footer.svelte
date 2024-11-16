@@ -5,15 +5,15 @@
 <footer>
   <style>
     .footer {
+      height: 50px;
       background-color: #333;
       color: white;
-      padding: 20px;
       text-align: center;
       /* position: fixed; Фиксированное положение */
       left: 0; /* Прилепить к левому краю */
       bottom: 0; /* Прилепить к нижнему краю */
       width: 100%; /* Занимать всю ширину */
-      z-index: 1000; /* Убедиться, что футер находится наверху других элементов */
+      z-index: 2; /* Убедиться, что футер находится наверху других элементов */
     }
   
     .footer-links {
@@ -21,6 +21,7 @@
       padding: 0;
       display: flex;
       justify-content: center;
+      align-items: center;
       flex-wrap: wrap;
     }
   
