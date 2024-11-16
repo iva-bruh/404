@@ -87,17 +87,17 @@
     {
       title: "О нас",
       content: "Мы рады представить вам наши услуги и помочь вам на пути к вашему успеху!",
-      image: "https://via.placeholder.com/600x300/1e90ff/ffffff?text=Слайд+1"
+      image: "images/comp.jpg"
     },
     {
       title: "Мероприятия",
       content: "Не пропустите наши актуальные мероприятия и события, которые помогут вам развиваться!",
-      image: "https://via.placeholder.com/600x300/ff7e5f/ffffff?text=Слайд+2"
+      image: "images/DC.png"
     },
     {
       title: "Контакты",
       content: "Свяжитесь с нами для получения дополнительной информации.",
-      image: "https://via.placeholder.com/600x300/4a69bd/ffffff?text=Слайд+3"
+      image: "images/contacts.jpg"
     }
   ];
 
@@ -110,6 +110,21 @@
   function prevSlide() {
     currentSlide = (currentSlide - 1 + slides.length) % slides.length;
   }
+
+  let events = [
+    {
+      title: "Международный IT-Форум",
+      description: "XVI Международный IT-форум с участием стран БРИКС и ШОС.",
+      image: "images/forum.png", // замените на путь к вашей картинке
+      link: "https://itforum.admhmao.ru/2024/news/10781903/" // замените на ссылку на сайт мероприятия
+    },
+    {
+      title: "Хакатон",
+      description: "Соревнование для разработчиков и дизайнеров.",
+      image: "images/DC.png", // замените на путь к вашей картинке
+      link: "https://digital.edro.su/main/info" // замените на ссылку на сайт мероприятия
+    }
+  ];
 </script>
 
 <Header />
@@ -131,6 +146,7 @@
     <button class="nav-button next" on:click={nextSlide}>&gt;</button>
   </div>
 
+  
 
   <!-- Блок дополнительной информации -->
   <div class="info">
@@ -150,10 +166,25 @@
   </div>
 </div>
 
+<div class="info">
+  <h2>Актуальные IT-события в России</h2>
+  <div class="events">
+    {#each events as event}
+      <div class="event-card">
+        <a href={event.link} target="_blank">
+          <img src={event.image} alt={event.title} />
+          <h3>{event.title}</h3>
+          <p>{event.description}</p>
+        </a>
+      </div>
+    {/each}
+  </div>
+</div>
+
 <!-- Canvas -->
 <canvas bind:this={canvas}></canvas>
 
-<Footer isMainPage="true"/>
+<Footer />
 
 <style>
   :global(body, html) {
@@ -281,5 +312,40 @@
   .info li {
       margin-bottom: 5px;
       color: #666;
+  }
+
+  .events {
+      display: flex;
+      /* flex-wrap: wrap; */
+      gap: 20px; /* Отступы между карточками событий */
+  }
+
+  .event-card {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      width: calc(50% - 10px); /* Две карточки в ряд с отступами */
+      transition: transform 0.3s ease;
+      /* height: 40%; */
+  }
+
+  .event-card:hover {
+      transform: scale(1.05); /* Увеличение карточки при наведении */
+  }
+
+  .event-card img {
+      width: 100%;
+      height: 70%;
+  }
+
+  .event-card h3 {
+      margin: 10px;
+      color: #333;
+  }
+
+  .event-card p {
+      margin: 10px;
+      color: #555;
   }
 </style>

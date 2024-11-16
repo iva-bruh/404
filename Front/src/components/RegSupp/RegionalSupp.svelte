@@ -200,7 +200,7 @@
 		padding: 10px;
 		background: linear-gradient(
 			270deg,
-			#2d5b2e,
+			rgb(45, 91, 46),
 			#4b8650,
 			#2d5b2e
 		); /* Градиент фона (синий и голубой) */
