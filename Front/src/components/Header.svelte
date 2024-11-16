@@ -57,7 +57,7 @@
         <li><a href="/">Главная</a></li>
         <li><a href="/contact">Меры поддержки</a></li>
         <li><a href="/about">О нас</a></li>
-        <li><a href="/services">Услуги</a></li>
+        <li><a href="/navzlet">"На взлёт!"</a></li>
         <li><a href="/contact">Контакты</a></li>
        
       </ul>
