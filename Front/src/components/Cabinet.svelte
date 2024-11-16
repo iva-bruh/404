@@ -109,6 +109,10 @@
         background-color: #f2f2f2;
     }
 
+    .sidebar ul li.active {
+        background-color: #d9d9d9; /* Новый цвет для активной вкладки */
+    }
+
     .content {
         margin-left: 220px; /* Для учёта ширины бокового меню */
         padding: 40px;
@@ -188,15 +192,13 @@
 <div class="sidebar">
     <h2>Меню</h2>
     <ul>
-        <li on:click={() => setActiveSection('info')}>Личная информация</li>
-        <li on:click={() => setActiveSection('files')}>Загруженные файлы</li>
-        <li on:click={() => setActiveSection('achievements')}>Достижения</li>
+        <li class={activeSection === 'info' ? 'active' : ''} on:click={() => setActiveSection('info')}>Личная информация</li>
+        <li class={activeSection === 'files' ? 'active' : ''} on:click={() => setActiveSection('files')}>Загруженные файлы</li>
+        <li class={activeSection === 'achievements' ? 'active' : ''} on:click={() => setActiveSection('achievements')}>Достижения</li>
     </ul>
 </div>
 
 <div class="content">
-    <h1>Личный кабинет</h1>
-
     {#if activeSection === 'info'}
         <div class="personal-info">
             <h2>Личная информация</h2>
