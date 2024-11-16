@@ -61,8 +61,8 @@
       </ul>
     </nav>
     <div class="auth-buttons">
-      <a href="" class="auth-button">Вход</a>
-      <a href="" class="auth-button">Регистрация</a>
+      <a href="/auth" class="auth-button">Вход</a>
+      <a href="/reg" class="auth-button">Регистрация</a>
     </div>  
   </header>
 </header>
