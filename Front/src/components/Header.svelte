@@ -48,7 +48,7 @@
     }
   
     .logo img {
-      height: 40px;
+      height: 50px;
     }
   
     .nav {
@@ -123,7 +123,7 @@
   
   <header class="header">
     <div class="logo">
-      <img src="logo.png" alt="Логотип компании" />
+      <img src="logo.svg" alt="">
     </div>
     <nav>
       <ul class="nav">

@@ -17,6 +17,7 @@
       z-index: 2;
       display: flex;
       justify-content: center;
+      margin-top:10px
     }
   
     .copyright {

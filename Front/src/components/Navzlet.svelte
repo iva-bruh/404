@@ -93,6 +93,7 @@
       max-width: 600px;
       margin: auto;
       text-align: center;
+      margin-top: 10px;
     }
   
     .question {
@@ -122,6 +123,7 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 1.2em;
+      margin-bottom: 10px;
     }
   
     button:hover {
@@ -135,6 +137,9 @@
     .option.selected {
         background-color: #1e90ff; /* Цвет выделенной опции */
         color: white;
+    }
+    h1{
+      font-size: 25px;
     }
     input {
       border: 1px solid;
