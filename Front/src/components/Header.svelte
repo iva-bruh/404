@@ -55,14 +55,18 @@
     <nav>
       <ul class="nav">
         <li><a href="/">Главная</a></li>
+        <li><a href="/contact">Меры поддержки</a></li>
         <li><a href="/about">О нас</a></li>
         <li><a href="/services">Услуги</a></li>
         <li><a href="/contact">Контакты</a></li>
+        <li><a href="/contact">Контакты</a></li>
+       
       </ul>
     </nav>
     <div class="auth-buttons">
       <a href="/auth" class="auth-button">Вход</a>
       <a href="/reg" class="auth-button">Регистрация</a>
+      <a href="/reg" class="auth-button">Личный кабинет</a>
     </div>  
   </header>
 </header>
