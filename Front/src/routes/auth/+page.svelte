@@ -1,12 +1,10 @@
 <script>
-    import Header from "../../components/Header.svelte";
-    import Footer from "../../components/Footer.svelte";
     let email = '';
     let password = '';
+    import Header from "../../components/Header.svelte";
+    import Footer from "../../components/Footer.svelte";
 </script>
-<Header>
-
-</Header>
+<Header />
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -90,5 +88,4 @@
         <button type="submit">Войти</button>
     </form>
 </div>
-<Footer>
-</Footer>
+<Footer />

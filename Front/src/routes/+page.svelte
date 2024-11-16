@@ -2,7 +2,7 @@
   import Header from "../components/Header.svelte";
   import Footer from "../components/Footer.svelte";
 </script>
-<Header></Header>
+<Header />
 <style>
   .background {
     position: fixed;
@@ -49,4 +49,4 @@
   <h1>Добро пожаловать на наш сайт!</h1>
   <p>Здесь начинается ваше удивительное путешествие!</p>
 </div>
-<Footer></Footer>
+<Footer />
