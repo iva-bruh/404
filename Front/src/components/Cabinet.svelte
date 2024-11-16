@@ -1,11 +1,20 @@
 <script>
+    let user = {
+        name: "Иван Иванов",
+        email: "ivan.ivanov@example.com",
+        phone: "+7 (123) 456-78-90",
+        age: 28,
+        bio: "Привет! Я разработчик, который любит Svelte и всё связанное с веб-технологиями."
+    };
+
     let files = [];
+    let achievements = [];
+    let newAchievement = "";
     let message = "";
-    
-    // Основные типы файлов, которые мы принимаем
+    let activeSection = 'info'; // Флаг для активного раздела
+
     const acceptedFileTypes = ["image/jpeg", "image/png", "application/pdf"];
-    
-    // Функция валидации загружаемого файла
+
     function validateFile(file) {
         if (!acceptedFileTypes.includes(file.type)) {
             message = "Только файлы форматов JPEG, PNG и PDF разрешены.";
@@ -14,7 +23,6 @@
         return true;
     }
 
-    // Функция для обработки загрузки файла
     function handleFileUpload(event) {
         const selectedFiles = Array.from(event.target.files);
         const validFiles = [];
@@ -32,9 +40,26 @@
         event.target.value = ""; // Сбросить выбор файла
     }
 
-    // Функция для удаления файла из списка
     function removeFile(fileToRemove) {
         files = files.filter(file => file !== fileToRemove);
+    }
+
+    function addAchievement() {
+        if (newAchievement.trim() !== "") {
+            achievements.push(newAchievement);
+            newAchievement = ""; // Очистить поле ввода
+            message = "Достижение успешно добавлено!";
+        } else {
+            message = "Введите достижение для добавления.";
+        }
+    }
+
+    function removeAchievement(achievementToRemove) {
+        achievements = achievements.filter(achievement => achievement !== achievementToRemove);
+    }
+
+    function setActiveSection(section) {
+        activeSection = section; // Установить активный раздел
     }
 </script>
 
@@ -42,43 +67,66 @@
     * {
         box-sizing: border-box;
     }
-    
+
     body {
+        display: flex;
+        margin: 0;
         background-color: #f2f3f7;
         font-family: Arial, sans-serif;
-        margin: 0;
+    }
+
+    .sidebar {
+        width: 200px;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        height: 100%;
+        padding: 20px;
+        overflow-y: auto;
+        border-right: 1px solid #e1e1e1;
+    }
+
+    .sidebar h2 {
+        margin-top: 0;
+        font-size: 1.2rem;
+        color: #333;
+    }
+
+    .sidebar ul {
+        list-style: none;
         padding: 0;
     }
 
-    .container {
+    .sidebar ul li {
+        margin: 10px 0;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+    .sidebar ul li:hover {
+        background-color: #f2f2f2;
+    }
+
+    .content {
+        margin-left: 220px; /* Для учёта ширины бокового меню */
         padding: 40px;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        max-width: 600px;
-        margin: 50px auto;
-        border: 1px solid #e1e1e1;
+        width: calc(100% - 220px);
     }
 
-    h1 {
-        text-align: center;
-        color: #333;
-        margin-bottom: 20px;
+    .info-item {
+        margin: 5px 0;
     }
 
-    input[type="file"] {
+    input[type="file"], input[type="text"] {
         display: block;
         margin: 20px auto;
         padding: 10px;
-        border: 2px dashed #4CAF50;
         border-radius: 5px;
         background-color: #fafafa;
-        cursor: pointer;
-        transition: border-color 0.2s ease;
-    }
-
-    input[type="file"]:hover {
-        border-color: #45a049;
+        border: 1px solid #ccc;
+        width: 100%;
     }
 
     .message {
@@ -88,17 +136,12 @@
         margin: 10px 0;
     }
 
-    h2 {
-        margin: 20px 0 10px;
-        color: #666;
-    }
-
-    .file-list {
+    .file-list, .achievement-list {
         list-style-type: none;
         padding: 0;
     }
 
-    .file-item {
+    .file-item, .achievement-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -109,7 +152,7 @@
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
-    .file-item:hover {
+    .file-item:hover, .achievement-item:hover {
         background-color: #e9e9e9;
         transition: background-color 0.2s ease;
     }
@@ -129,37 +172,69 @@
     }
 
     @media (max-width: 700px) {
-        .container {
-            padding: 20px;
+        .sidebar {
+            width: 100%; /* Полная ширина на маленьких экранах */
+            position: relative;
+            height: auto;
         }
 
-        h1 {
-            font-size: 1.5rem;
-        }
-
-        input[type="file"], 
-        .remove-button {
-            width: 100%;
+        .content {
+            margin-left: 0;
+            width: 100%; /* Полная ширина на маленьких экранах */
         }
     }
 </style>
 
-<div class="container">
+<div class="sidebar">
+    <h2>Меню</h2>
+    <ul>
+        <li on:click={() => setActiveSection('info')}>Личная информация</li>
+        <li on:click={() => setActiveSection('files')}>Загруженные файлы</li>
+        <li on:click={() => setActiveSection('achievements')}>Достижения</li>
+    </ul>
+</div>
+
+<div class="content">
     <h1>Личный кабинет</h1>
 
-    <input type="file" accept=".jpeg, .jpg, .png, .pdf" on:change={handleFileUpload} multiple />
-    
-    {#if message}
-        <p class="message">{message}</p>
-    {/if}
+    {#if activeSection === 'info'}
+        <div class="personal-info">
+            <h2>Личная информация</h2>
+            <div class="info-item"><strong>Имя:</strong> {user.name}</div>
+            <div class="info-item"><strong>Email:</strong> {user.email}</div>
+            <div class="info-item"><strong>Телефон:</strong> {user.phone}</div>
+            <div class="info-item"><strong>Возраст:</strong> {user.age}</div>
+            <div class="info-item"><strong>О себе:</strong> {user.bio}</div>
+        </div>
+    {:else if activeSection === 'files'}
+        <h2>Загруженные файлы:</h2>
+        <input type="file" accept=".jpeg, .jpg, .png, .pdf" on:change={handleFileUpload} multiple />
+        
+        {#if message}
+            <p class="message">{message}</p>
+        {/if}
 
-    <h2>Загруженные достижения:</h2>
-    <ul class="file-list">
-        {#each files as file}
-            <li class="file-item">
-                {file.name}
-                <button class="remove-button" on:click={() => removeFile(file)}>Удалить</button>
-            </li>
-        {/each}
-    </ul>
+        <ul class="file-list">
+            {#each files as file}
+                <li class="file-item">
+                    {file.name}
+                    <button class="remove-button" on:click={() => removeFile(file)}>Удалить</button>
+                </li>
+            {/each}
+        </ul>
+    {:else if activeSection === 'achievements'}
+        <h2>Добавить достижение:</h2>
+        <input type="text" bind:value={newAchievement} placeholder="Введите ваше достижение" />
+        <button class="remove-button" on:click={addAchievement}>Добавить</button>
+
+        <h2>Ваши достижения:</h2>
+        <ul class="achievement-list">
+            {#each achievements as achievement}
+                <li class="achievement-item">
+                    {achievement}
+                    <button class="remove-button" on:click={() => removeAchievement(achievement)}>Удалить</button>
+                </li>
+            {/each}
+        </ul>
+    {/if}
 </div>
