@@ -61,6 +61,7 @@ class UserInDB(UserBase):
 
 class PromptText(BaseModel):
     prompt: str
+    answers: list
 
 class UserOut(UserBase):
     email: str
@@ -238,9 +239,9 @@ async def auth_status(request: Request):
 @app.post("/neural_network")
 def neural_network_access(prompt: PromptText):
     try:
-        return { "message": neural_network.get_answer(str(prompt))["choices"][0]["message"]["content"] }
-    except:
-        return { "message": "An error occured" }
+        return { "message": neural_network.get_answer(str(prompt.prompt), prompt.answers)["choices"][0]["message"]["content"] }
+    except Exception as e:
+        return { "message": f"An error occured: {e}" }
 
 @app.post("/login")
 def login_for_access_token(

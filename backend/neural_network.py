@@ -1,7 +1,6 @@
 import requests
 import json
 
-PRE_PROMPT = "Напиши то, как можно достигнуть следующей цели (пиши только шаги к достижению цели, каждый шаг выделяй как [goal] <шаг> [/goal]. Например для цели 'Построить кирпичный завод' приемлемым будет считаться примерно такой ответ: [goal] Провести анализ рынка и определить целесообразность строительства кирпичного завода[/goal][goal] Выбрать местоложение для завода, учитывая логистику и доступность сырья[/goal][goal] Разработать проект завода, включая технологические процессы и инфраструктуры[/goal] и т.д.) Каждая цель должна иметь несколько подцелей (или хотя бы одну) - [goal][subgoal] <text 1> [/subgoal][subgoal] <text 2> [/subgoal][subgoal] <text 3> [/subgoal][/goal]. После каждой цели или подцели должно стоять \\n: "
 CLIENT_ID = "b68ba196-3ebe-44f1-a1af-8430231d4ef2"
 AUTH_TOKEN = "YjY4YmExOTYtM2ViZS00NGYxLWExYWYtODQzMDIzMWQ0ZWYyOmU5MTY5NmJiLWQ1N2ItNDllMy05MGU5LTJlMTQ5NTMwYmRlNw=="
 
@@ -20,7 +19,13 @@ def get_token():
 
     return response.json()
 
-def get_answer(text):
+def get_answer(text, answers):
+    PRE_PROMPT = f"""Пользователю был задан ряд вопросов: Что для вас наиболее важно в работе? Какой навык вы хотите развить? Что вас мотивирует?
+                Учитывая, что пользователь соответственно ответил на них так: {answers[0]} {answers[1]} {answers[2]} 
+                Напиши то, как можно достигнуть следующей цели (пиши только шаги к достижению цели, каждый шаг выделяй как [goal] <шаг> [/goal] 
+                Каждая цель должна иметь несколько подцелей (или хотя бы одну) - 
+                [goal] <text 0> [/goal][subgoal] <text 1> [/subgoal][subgoal] <text 2> [/subgoal][subgoal] <text 3> [/subgoal]. 
+                После каждой цели или подцели должно стоять \\n: """
     access_token = get_token()["access_token"]
     url = "https://gigachat.devices.sberbank.ru/api/v1/chat/completions"
     payload = json.dumps({
