@@ -27,6 +27,25 @@
       color: white;
       text-decoration: none;
     }
+
+    .auth-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .auth-button {
+      background-color: transparent;
+      color: white;
+      border: 1px solid white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .auth-button:hover {
+      background-color: white;
+      color: #333;
+    }
   </style>
   
   <header class="header">
@@ -40,6 +59,10 @@
         <li><a href="/services">Услуги</a></li>
         <li><a href="/contact">Контакты</a></li>
       </ul>
-    </nav>  
+    </nav>
+    <div class="auth-buttons">
+      <a href="" class="auth-button">Вход</a>
+      <a href="" class="auth-button">Регистрация</a>
+    </div>  
   </header>
 </header>
