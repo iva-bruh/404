@@ -34,37 +34,56 @@
 
 <style>
     .contacts-page {
-        background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         width: 100%;
-        max-width: 600px; /* Максимальная ширина страницы контактов */
-        margin: 20px auto; /* Центрируем страницу по горизонтали */
+        max-width: 800px; /* Увеличиваем ширину для колонок */
+        margin: 40px auto;
+        font-family: Arial, sans-serif;
+        display: flex; /* Используем Flexbox */
+        flex-wrap: wrap; /* Позволяем элементам переноситься на новую строку */
+        justify-content: space-between; /* Распределяем пространство между колонками */
     }
 
     h2 {
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
+        color: #333;
+        width: 100%; /* Заголовок занимает всю ширину */
     }
 
     .contact {
-        border-bottom: 1px solid #ccc;
-        padding: 10px 0;
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 10px; /* Уменьшаем отступы между контактами */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        flex: 0 0 calc(50% - 20px); /* Устанавливаем ширину каждого контакта на 50% минус отступы */
+        box-sizing: border-box; /* Учитываем отступы в ширине */
     }
 
-    .contact:last-child {
-        border-bottom: none; /* Убираем нижнюю границу у последнего контакта */
+    .contact:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
     .contact h3 {
         margin: 0;
-        font-size: 18px;
+        font-size: 20px;
+        color: #007BFF;
     }
 
     .contact p {
         margin: 5px 0;
         font-size: 14px;
+        color: #555;
+    }
+
+    .contact strong {
+        color: #333;
     }
 </style>
 
@@ -74,8 +93,8 @@
         <div class="contact">
             <h3>{contact.name}</h3>
             <p><strong>Должность:</strong> {contact.position}</p>
-            <p><strong>Email:</strong> {contact.email}</p>
-            <p><strong>Телефон:</strong> {contact.phone}</p>
+            <p><strong>Email:</strong> <a href={`mailto:${contact.email}`}>{contact.email}</a></p>
+            <p><strong>Телефон:</strong> <a href={`tel:${contact.phone}`}>{contact.phone}</a></p>
         </div>
     {/each}
 </div>
