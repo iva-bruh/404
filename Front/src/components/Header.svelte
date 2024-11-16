@@ -132,11 +132,11 @@
           <a>Меры поддержки</a>
           <div class="dropdown">
             <a href="/federationsupp">Федеральные меры поддержки</a>
-            <a href="/reg-support">Региональные меры поддержки</a>
+            <a href="/regionalsupp">Региональные меры поддержки</a>
           </div>
         </li>
         <li><a href="/navzlet">"На взлёт!"</a></li>
-        <li><a href="/contact">Контакты</a></li>
+        <li><a href="/contacts">Контакты</a></li>
       </ul>
     </nav>
     <div class="auth-buttons">
