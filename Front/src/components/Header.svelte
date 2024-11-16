@@ -17,15 +17,50 @@
     .nav {
       list-style: none;
       display: flex;
+      position: relative;
     }
   
     .nav li {
       margin: 0 15px;
+      position: relative;
     }
   
     .nav a {
       color: white;
       text-decoration: none;
+      padding: 8px 12px; /* Размеры кнопки */
+      border-radius: 5px; /* Скругленные углы */
+      transition: background-color 0.3s; /* Плавный переход для фона */
+    }
+
+    .nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2); /* Полупрозрачный белый фон при наведении */
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      background-color: #444;
+      border-radius: 5px; /* Скругленные углы для выпадающего меню */
+      padding: 10px 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      z-index: 1;
+    }
+
+    .nav li:hover .dropdown {
+      display: block;
+    }
+
+    .dropdown a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px; /* Уменьшенный отступ */
+      transition: background-color 0.3s; /* Плавный переход для фона */
+    }
+
+    .dropdown a:hover {
+      background-color: rgba(255, 255, 255, 0.3); /* Полупрозрачный белый фон при наведении */
     }
 
     .auth-buttons {
@@ -40,6 +75,7 @@
       padding: 5px 10px;
       border-radius: 5px;
       text-decoration: none;
+      transition: background-color 0.3s, color 0.3s; /* Плавные переходы */
     }
 
     .auth-button:hover {
@@ -55,11 +91,16 @@
     <nav>
       <ul class="nav">
         <li><a href="/">Главная</a></li>
-        <li><a href="/contact">Меры поддержки</a></li>
+        <li>
+          <a href="/contact">Меры поддержки</a>
+          <div class="dropdown">
+            <a href="/fed-support">Федеральные меры поддержки</a>
+            <a href="/reg-support">Региональные меры поддержки</a>
+          </div>
+        </li>
         <li><a href="/about">О нас</a></li>
         <li><a href="/navzlet">"На взлёт!"</a></li>
         <li><a href="/contact">Контакты</a></li>
-       
       </ul>
     </nav>
     <div class="auth-buttons">
