@@ -1,5 +1,4 @@
 <script>
-    import { onMount } from "svelte";
     let files = [];
     let message = "";
     
@@ -30,7 +29,7 @@
         });
 
         files = [...files, ...validFiles];
-        event.target.value = ""; // Сбросить выбор файла (для тестирования)
+        event.target.value = ""; // Сбросить выбор файла
     }
 
     // Функция для удаления файла из списка
@@ -40,22 +39,58 @@
 </script>
 
 <style>
+    * {
+        box-sizing: border-box;
+    }
+    
+    body {
+        background-color: #f2f3f7;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
     .container {
-        padding: 20px;
+        padding: 40px;
         background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         max-width: 600px;
-        margin: auto;
+        margin: 50px auto;
+        border: 1px solid #e1e1e1;
     }
 
     h1 {
         text-align: center;
+        color: #333;
+        margin-bottom: 20px;
     }
 
     input[type="file"] {
         display: block;
-        margin: 20px 0;
+        margin: 20px auto;
+        padding: 10px;
+        border: 2px dashed #4CAF50;
+        border-radius: 5px;
+        background-color: #fafafa;
+        cursor: pointer;
+        transition: border-color 0.2s ease;
+    }
+
+    input[type="file"]:hover {
+        border-color: #45a049;
+    }
+
+    .message {
+        text-align: center;
+        color: #ff5722;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+
+    h2 {
+        margin: 20px 0 10px;
+        color: #666;
     }
 
     .file-list {
@@ -66,23 +101,46 @@
     .file-item {
         display: flex;
         justify-content: space-between;
-        margin: 5px 0;
-        padding: 8px;
+        align-items: center;
         background-color: #f9f9f9;
-        border-radius: 4px;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin: 5px 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
-    button {
+    .file-item:hover {
+        background-color: #e9e9e9;
+        transition: background-color 0.2s ease;
+    }
+
+    .remove-button {
         cursor: pointer;
-        background-color: #ff4d4d;
+        background-color: #f44336;
         border: none;
         color: white;
         padding: 5px 10px;
-        border-radius: 4px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
     }
 
-    button:hover {
-        background-color: #ff1a1a;
+    .remove-button:hover {
+        background-color: #d32f2f;
+    }
+
+    @media (max-width: 700px) {
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        input[type="file"], 
+        .remove-button {
+            width: 100%;
+        }
     }
 </style>
 
@@ -92,7 +150,7 @@
     <input type="file" accept=".jpeg, .jpg, .png, .pdf" on:change={handleFileUpload} multiple />
     
     {#if message}
-        <p>{message}</p>
+        <p class="message">{message}</p>
     {/if}
 
     <h2>Загруженные достижения:</h2>
@@ -100,7 +158,7 @@
         {#each files as file}
             <li class="file-item">
                 {file.name}
-                <button on:click={() => removeFile(file)}>Удалить</button>
+                <button class="remove-button" on:click={() => removeFile(file)}>Удалить</button>
             </li>
         {/each}
     </ul>

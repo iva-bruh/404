@@ -65,7 +65,7 @@
     <div class="auth-buttons">
       <a href="/auth" class="auth-button">Вход</a>
       <a href="/reg" class="auth-button">Регистрация</a>
-      <a href="/" class="auth-button">Личный кабинет</a>
+      <a href="/cabinet" class="auth-button">Личный кабинет</a>
     </div>  
   </header>
 </header>
