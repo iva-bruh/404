@@ -94,7 +94,7 @@
         <li>
           <a>Меры поддержки</a>
           <div class="dropdown">
-            <a href="/fed-support">Федеральные меры поддержки</a>
+            <a href="/federationsupp">Федеральные меры поддержки</a>
             <a href="/reg-support">Региональные меры поддержки</a>
           </div>
         </li>
