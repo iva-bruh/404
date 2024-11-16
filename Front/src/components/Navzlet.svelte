@@ -74,6 +74,10 @@
       margin-top: 30px;
       text-align: left;
     }
+    .option.selected {
+        background-color: #1e90ff; /* Цвет выделенной опции */
+        color: white;
+    }
   </style>
   
   <div class="container">
@@ -81,13 +85,15 @@
     <p>Ответьте на вопросы, чтобы выстроить индивидуальную траекторию.</p>
   
     {#each questions as { question, options }, index}
-      <div class="question">{question}</div>
-      {#each options as option}
-        <div class="option" on:click={() => userAnswers[index] = option}>
-          {option}
+    <div class="question">{question}</div>
+    {#each options as option}
+        <div class="option {userAnswers[index] === option ? 'selected' : ''}" 
+             on:click={() => userAnswers[index] = option}>
+            {option}
         </div>
-      {/each}
     {/each}
+{/each}
+
   
     <button on:click={getGoals}>Получить цели</button>
   
