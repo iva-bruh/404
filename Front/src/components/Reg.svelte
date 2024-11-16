@@ -2,8 +2,28 @@
         let email = '';
         let password = '';
         let confirmPassword = '';
+        let passwordConfirmed = true;
         import Header from "./Header.svelte";
         import Footer from "./Footer.svelte";
+        let Register = async () => {
+            if (password == confirmPassword) {
+                let response = await fetch("http://localhost:8000/users", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                    },
+                    body: JSON.stringify({
+                        "email": email,
+                        "password": password,
+                    })
+                })
+                let data = await response.json();
+                console.log(data)
+            } else {
+                passwordConfirmed = false;
+            }
+        }
     </script>
     <Header />
 
@@ -80,7 +100,10 @@
                 <label for="confirmPassword">Подтвердите пароль:</label>
                 <input type="password" id="confirmPassword" bind:value={confirmPassword} required />
             </div>
-            <button type="submit">Зарегистрироваться</button>
+            {#if !passwordConfirmed}
+            <div class="error">Пароли не совпадают!</div>
+            {/if}
+            <button type="submit" on:click={Register}>Зарегистрироваться</button>
         </form>
     </div>
     <Footer />

@@ -1,4 +1,6 @@
 <script>
+    import { redirect } from "@sveltejs/kit";
+    import { isAuthenticated } from "../store.js";
     let user = {
         name: "Иван Иванов",
         email: "ivan.ivanov@example.com",
@@ -6,7 +8,6 @@
         age: 28,
         bio: "Привет! Я разработчик, который любит Svelte и всё связанное с веб-технологиями."
     };
-
     let files = [];
     let achievements = [];
     let newAchievement = "";

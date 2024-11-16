@@ -3,6 +3,31 @@
     let password = '';
     import Header from "./Header.svelte";
     import Footer from "./Footer.svelte";
+    let loggedIn = false;
+    import { redirect } from "@sveltejs/kit";
+    let Auth = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('username', email);
+            formData.append('password', password);
+            let response = await fetch("http://localhost:8000/login", {
+                credentials: "include",
+                method: "POST",
+                body: formData
+            })
+            let data = await response.json();
+            console.log(data);
+            if (response.ok) {
+                loggedIn = true;
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+        if (loggedIn) {
+            redirect(307, "/cabinet")
+        }
+    }
 </script>
 <Header />
 <style>
@@ -74,7 +99,7 @@
             <label for="password">Пароль:</label>
             <input type="password" id="password" bind:value={password} required />
         </div>
-        <button type="submit">Войти</button>
+        <button type="submit" on:click={Auth}>Войти</button>
     </form>
 </div>
 <Footer />

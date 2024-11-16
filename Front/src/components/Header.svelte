@@ -1,3 +1,26 @@
+<script>
+	import { goto } from "$app/navigation";
+  import { isAuthenticated } from "../store.js";
+  import { onMount } from "svelte";
+  let isLogged = false;
+  onMount( async () => {
+    try {
+      let response = await fetch("http://localhost:8000/auth/status", {
+        credentials: "include",
+      });
+      if (response.ok) {
+        const data = await response.json();
+        isLogged = data.authenticated;
+        isAuthenticated.set(isLogged);
+      } else {
+        isAuthenticated.set(false);
+      }
+    } catch(e) {
+      console.log(e);
+    }
+  })
+</script>
+
 <header>
   
   <style>
@@ -95,18 +118,21 @@
           <a>Меры поддержки</a>
           <div class="dropdown">
             <a href="/federationsupp">Федеральные меры поддержки</a>
-            <a href="/regionalsupp">Региональные меры поддержки</a>
+            <a href="/reg-support">Региональные меры поддержки</a>
           </div>
         </li>
         <li><a href="/about">О нас</a></li>
         <li><a href="/navzlet">"На взлёт!"</a></li>
-        <li><a href="/contacts">Контакты</a></li>
+        <li><a href="/contact">Контакты</a></li>
       </ul>
     </nav>
     <div class="auth-buttons">
-      <a href="/auth" class="auth-button">Вход</a>
-      <a href="/reg" class="auth-button">Регистрация</a>
+{#if isLogged}
       <a href="/cabinet" class="auth-button">Личный кабинет</a>
+{:else}
+<a href="/auth" class="auth-button">Вход</a>
+      <a href="/reg" class="auth-button">Регистрация</a>
+{/if}
     </div>  
   </header>
 </header>
