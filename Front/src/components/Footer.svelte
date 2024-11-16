@@ -1,9 +1,9 @@
 <footer>
   <style>
     .footer {
+      height: 50px;
       background-color: #333;
       color: white;
-      padding: 20px;
       text-align: center;
       position: fixed; /* Фиксированное положение */
       left: 0; /* Прилепить к левому краю */
@@ -17,6 +17,7 @@
       padding: 0;
       display: flex;
       justify-content: center;
+      align-items: center;
       flex-wrap: wrap;
     }
   
