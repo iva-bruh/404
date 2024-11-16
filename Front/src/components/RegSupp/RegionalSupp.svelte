@@ -187,7 +187,7 @@
 		grid-template-columns: repeat(4, 1fr); /* 4 равные колонки */
 		gap: 20px; /* Промежутки между элементами */
 		border-radius: 10px; /* Закругления контейнера */
-		background-color: #d7ffd28f; /* Фон контейнера */
+		background-color: #badab58f; /* Фон контейнера */
 		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Тень для контейнера */
 	}
 
@@ -201,7 +201,7 @@
 		background: linear-gradient(
 			270deg,
 			#2d5b2e,
-			#57a65d,
+			#4b8650,
 			#2d5b2e
 		); /* Градиент фона (синий и голубой) */
 		background-size: 400% 400%; /* Увеличиваем размер градиента для анимации */

@@ -113,7 +113,7 @@
     grid-template-columns: repeat(4, 1fr); /* 4 равные колонки */
     gap: 20px; /* Промежутки между элементами */
     border-radius: 10px; /* Закругления контейнера */
-    background-color: rgba(161, 190, 248, 0.26); /* Фон контейнера */
+    background-color: rgba(99, 125, 173, 0.26); /* Фон контейнера */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Тень для контейнера */
   }
 
