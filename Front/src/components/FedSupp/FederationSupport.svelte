@@ -2,73 +2,106 @@
 	import Header from '../Header.svelte';
 	import Footer from '../Footer.svelte';
 
+  let selectedMeasure = null;
+
   const measures = [
     {
       title: "Налоговые льготы",
       description: "Для поддержки ИТ-компаний в отдельных сферах бизнеса государство снижает их налоговую нагрузку — переносит сроки уплаты налогов, вводит льготные ставки, устраивает налоговые каникулы.",
-      image: "images/налоговые льготы.jpg"
+      image: "images/налоговые льготы.jpg",
+      overlayText: `
+				<p>Кому предназначена мера:</p>
+				<ul>
+					<li>◆ Поддержка малых ИТ-компаний.</li>
+					<li>◆ Налоговые каникулы до 3 лет.</li>
+				</ul>
+        <p style="margin-top: 3%">Виды налогов:</p>
+				<ul>
+					<li>◆ Налог на прибыль.</li>
+					<li>◆ НДС.</li>
+          <li>◆ Страховые взносы.</li>
+          <li>◆ УСН.</li>
+          <li>◆ Налог на имущество и арендные ставки.</li>
+          <li>◆ Земельный налог.</li>
+				</ul>
+        <p style="margin-top: 3%">Получатели:</p>
+				<ul>
+					<li>◆ Льготы для малого бизнеса.</li>
+					<li>◆ Льготы для разработчиков ПО.</li>
+          <li>◆ Льготы для дизайн-центров.</li>
+				</ul>
+        <p style="margin-top: 3%">Подробнее по ссылке: <a style="color: #0D4CD3" href="https://www.gosuslugi.ru/itindustry/tax_incentives">https://www.gosuslugi.ru/itindustry/tax_incentives</a></p>
+			`
     },
     {
       title: "Льготные кредиты",
       description: "Государство предоставляет компаниям кредиты по льготной ставке для разработки и внедрения различных, в том числе дорогостоящих ИТ‑решений, а также на покрытие расходов по операционной деятельности.",
-      image: "images/льготные кредиты.jpg"
+      image: "images/льготные кредиты.jpg",
     },
     {
       title: "Гранты",
       description: "Компании могут участвовать в конкурсах и получать гранты на реализацию инновационных проектов.",
-      image: "images/гранты.jpg"
+      image: "images/гранты.jpg",
     },
     {
       title: "Субсидирование приобретения ПО для МСП",
       description: "Субъекты малого и среднего бизнеса могут приобрести российское ПО со скидкой 50%.",
-      image: "images/субсидирование.jpg"
+      image: "images/субсидирование.jpg",
     },
     {
       title: "Льготная ипотека",
       description: "Специальные условия ипотечных кредитов для IT-специалистов и их семей.",
-      image: "images/ипотека.jpeg"
+      image: "images/ипотека.jpeg",
     },
     {
       title: "Отсрочка от призыва",
       description: "IT-специалисты могут получать отсрочку от военной службы, что обеспечивает стабильность в работе.",
-      image: "images/отсрочка.jpg"
+      image: "images/отсрочка.jpg",
     },
     {
       title: "Освобождение от проверок",
       description: "IT-компании могут быть освобождены от плановых проверок в течение определенного времени.",
-      image: "images/освобождение.jpg"
+      image: "images/освобождение.jpg",
     },
     {
       title: "Трудоустройство и ВНЖ для иностранцев",
       description: "Упрощенные процедуры трудоустройства и получения вида на жительство для иностранных IT-специалистов.",
-      image: "images/трудоустр.jpg"
+      image: "images/трудоустр.jpg",
     },
     {
       title: "Включение в реестры",
       description: "Компаниям предоставляется возможность включения в специальные реестры, что открывает доступ к дополнительным льготам.",
-      image: "images/реестр.jpg"
+      image: "images/реестр.jpg",
     },
     {
       title: "Аккредитация",
       description: "Процедура аккредитации в целях получения государственных субсидий и льгот.",
-      image: "images/аккредитация.jpg"
+      image: "images/аккредитация.jpg",
     },
     {
       title: "ИТ-образование",
       description: "Поддержка образовательных программ и курсов для подготовки IT-специалистов.",
-      image: "images/образование.jpg"
+      image: "images/образование.jpg",
     },
     {
       title: "Привлечение финансирования",
       description: "Меры, направленные на помощь в привлечении частного и государственного финансирования для IT-компаний.",
-      image: "images/финансирование.jpg"
+      image: "images/финансирование.jpg",
     },
     {
       title: "Поддержка особо значимых проектов",
       description: "Государственная поддержка для реализации крупных IT-проектов, имеющих стратегическое значение.",
-      image: "images/поддержка.jpg"
+      image: "images/поддержка.jpg",
     }
   ];
+
+  function openOverlay(measure) {
+		selectedMeasure = measure;
+	}
+
+	function closeOverlay() {
+		selectedMeasure = null;
+	}
 </script>
 
 <style>
@@ -154,17 +187,59 @@
     line-height: 1.5; /* Высота строки для лучшей читаемости */
     margin: 0; /* Убираем отступы */
   }
+
+  .overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba(0, 0, 0, 0.7);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 3; /* Убедитесь, что оверлей выше остальных элементов */
+	}
+
+	.overlay-content {
+		background: #ffffff;
+		padding: 20px;
+		border-radius: 10px;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+		position: relative;
+		width: 80%;
+		max-width: 600px;
+	}
+
+	.close-button {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		cursor: pointer;
+    color: #0D4CD3; /* Синий цвет для текста кнопки */
+    background: none; /* Убираем фон кнопки */
+	}
 </style>
 
 <Header />
 <h1>Федеральные меры поддержки в сфере IT</h1>
 <div class="container">
 	{#each measures as measure}
-		<div class="measure">
+		<button class="measure" on:click={() => openOverlay(measure)} aria-label={measure.title}>
 			<img src={measure.image} alt={measure.title} />
 			<h2>{measure.title}</h2>
 			<p>{measure.description}</p>
-		</div>
+		</button>
 	{/each}
 </div>
+
+{#if selectedMeasure}
+	<div class="overlay" role="dialog" aria-labelledby="overlay-title" aria-modal="true" on:click={closeOverlay}>
+		<div class="overlay-content" on:click|stopPropagation>
+			<button class="close-button" on:click={closeOverlay} aria-label="Закрыть оверлей">⨉</button>
+			<h2 style="color: #0D4CD3; font-weight: bold" id="overlay-title">{selectedMeasure.title}</h2>
+			{@html selectedMeasure.overlayText} <!-- Здесь используется вставка HTML -->
+		</div>
+	</div>
+{/if}
 <Footer />
