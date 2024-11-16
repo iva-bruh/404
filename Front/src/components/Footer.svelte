@@ -35,12 +35,6 @@
   </style>
   
   <footer class="footer">
-    <ul class="footer-links">
-      <li><a href="/">Главная</a></li>
-      <li><a href="/about">О нас</a></li>
-      <li><a href="/services">Услуги</a></li>
-      <li><a href="/contact">Контакты</a></li>
-    </ul>
     <div class="copyright">
       © 2024 Мозгов нет. Права защищать не будем.
     </div>
