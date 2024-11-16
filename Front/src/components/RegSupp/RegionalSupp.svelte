@@ -307,7 +307,7 @@
 	}
 
 	.close-button:hover {
-		background-color: #0f9e20;
+		background-color: #6e1c0a;
 	}
 	.overlay-content a {
 		color: #007bff;
