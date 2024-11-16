@@ -51,6 +51,7 @@
         margin-bottom: 30px;
         color: #333;
         width: 100%; /* Заголовок занимает всю ширину */
+        font-size: 22px;
     }
 
     .contact {
