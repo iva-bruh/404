@@ -28,20 +28,20 @@
     .nav a {
       color: white;
       text-decoration: none;
-      padding: 8px 12px; /* Размеры кнопки */
-      border-radius: 5px; /* Скругленные углы */
-      transition: background-color 0.3s; /* Плавный переход для фона */
+      padding: 8px 12px; 
+      border-radius: 5px; 
+      transition: background-color 0.3s; 
     }
 
     .nav a:hover {
-      background-color: rgba(255, 255, 255, 0.2); /* Полупрозрачный белый фон при наведении */
+      background-color: rgba(255, 255, 255, 0.2);
     }
 
     .dropdown {
       display: none;
       position: absolute;
       background-color: #444;
-      border-radius: 5px; /* Скругленные углы для выпадающего меню */
+      border-radius: 5px;
       padding: 10px 0;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       z-index: 1;
@@ -55,12 +55,12 @@
       display: block;
       color: white;
       text-decoration: none;
-      padding: 8px 12px; /* Уменьшенный отступ */
-      transition: background-color 0.3s; /* Плавный переход для фона */
+      padding: 8px 12px; 
+      transition: background-color 0.3s; 
     }
 
     .dropdown a:hover {
-      background-color: rgba(255, 255, 255, 0.3); /* Полупрозрачный белый фон при наведении */
+      background-color: rgba(255, 255, 255, 0.3); 
     }
 
     .auth-buttons {
@@ -94,7 +94,7 @@
         <li>
           <a>Меры поддержки</a>
           <div class="dropdown">
-            <a href="/fed-support">Федеральные меры поддержки</a>
+            <a href="/federationsupp">Федеральные меры поддержки</a>
             <a href="/reg-support">Региональные меры поддержки</a>
           </div>
         </li>
