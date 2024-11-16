@@ -153,13 +153,12 @@
 <!-- Canvas -->
 <canvas bind:this={canvas}></canvas>
 
-<Footer />
+<Footer isMainPage="true"/>
 
 <style>
   :global(body, html) {
       margin: 0;
       padding: 0;
-      overflow: hidden;
       background-color: transparent;
   }
   
@@ -194,7 +193,6 @@
 
   .slides {
       display: flex;
-      transition: transform 0.7s ease;
   }
 
   .slide {
@@ -219,7 +217,7 @@
       transition: transform 0.3s ease;
   }
 
-  .slide:hover img {
+  .slide img:hover {
       transform: scale(1.05);
   }
 

@@ -1,3 +1,7 @@
+<script>
+  export let isMainPage = "false";
+</script>
+
 <footer>
   <style>
     .footer {
@@ -5,11 +9,11 @@
       background-color: #333;
       color: white;
       text-align: center;
-      position: fixed; /* Фиксированное положение */
+      /* position: fixed; Фиксированное положение */
       left: 0; /* Прилепить к левому краю */
       bottom: 0; /* Прилепить к нижнему краю */
       width: 100%; /* Занимать всю ширину */
-      z-index: 1000; /* Убедиться, что футер находится наверху других элементов */
+      z-index: 2; /* Убедиться, что футер находится наверху других элементов */
     }
   
     .footer-links {
@@ -36,7 +40,7 @@
     }
   </style>
   
-  <footer class="footer">
+  <footer class="footer" style={isMainPage == "true" ? "position: fixed" : ""}>
     <div class="copyright">
       © 2024 Мозгов нет. Права защищать не будем.
     </div>

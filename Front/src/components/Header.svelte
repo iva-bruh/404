@@ -44,7 +44,7 @@
       border-radius: 5px;
       padding: 10px 0;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      z-index: 10;
+      z-index: 2;
     }
 
     .nav li:hover .dropdown {
@@ -95,7 +95,7 @@
           <a>Меры поддержки</a>
           <div class="dropdown">
             <a href="/federationsupp">Федеральные меры поддержки</a>
-            <a href="/reg-support">Региональные меры поддержки</a>
+            <a href="/regionalsupp">Региональные меры поддержки</a>
           </div>
         </li>
         <li><a href="/about">О нас</a></li>
