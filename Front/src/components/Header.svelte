@@ -92,7 +92,7 @@
       <ul class="nav">
         <li><a href="/">Главная</a></li>
         <li>
-          <a href="/contact">Меры поддержки</a>
+          <a>Меры поддержки</a>
           <div class="dropdown">
             <a href="/fed-support">Федеральные меры поддержки</a>
             <a href="/reg-support">Региональные меры поддержки</a>
