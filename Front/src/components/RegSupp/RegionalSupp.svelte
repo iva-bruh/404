@@ -93,7 +93,7 @@
 		grid-template-columns: repeat(4, 1fr); /* 4 равные колонки */
 		gap: 20px; /* Промежутки между элементами */
 		border-radius: 10px; /* Закругления контейнера */
-		background-color: #ffffff; /* Фон контейнера */
+		background-color: #d7ffd28f; /* Фон контейнера */
 		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Тень для контейнера */
 	}
 
@@ -102,13 +102,30 @@
 		margin-bottom: 30px;
 		font-size: 2em; /* Увеличенный размер */
 		font-weight: bold; /* Полужирное начертание заголовка */
-		color: #ffffff; /* Цвет заголовка */
+		color: #ebe7e7; /* Цвет заголовка */
 		padding: 10px;
-		background-color: #0d4cd3; /* Темный насыщенный синий цвет */
+		background: linear-gradient(
+			270deg,
+			#0c6d0f,
+			#0f9e20,
+			#0c6d0f
+		); /* Градиент фона (синий и голубой) */
+		background-size: 400% 400%; /* Увеличиваем размер градиента для анимации */
+		animation: gradientAnimation 5s ease infinite; /* Анимация градиента */
 		border-radius: 0 0 10px 10px; /*Закругление углов заголовка */
 		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Тень для заголовка */
 	}
-
+	@keyframes gradientAnimation {
+		0% {
+			background-position: 0% 50%; /* Начальная позиция фона */
+		}
+		50% {
+			background-position: 100% 50%; /* Позиция фона в середине анимации */
+		}
+		100% {
+			background-position: 0% 50%; /* Конечная позиция фона */
+		}
+	}
 	.measure {
 		border-radius: 10px; /* Закругленные углы карточек */
 		overflow: hidden; /* Скрывать переполнение */
@@ -130,7 +147,7 @@
 		height: 200px; /* Автоматическая высота с сохранением пропорций */
 		max-height: 180px; /* Максимальная высота изображения */
 		object-fit: cover; /* Обрезка изображения для заполнения блока */
-		border-bottom: 4px solid #0d4cd3; /* Цветовая граница снизу изображения */
+		border-bottom: 4px solid #0c6d0f; /* Цветовая граница снизу изображения */
 		transition: filter 0.3s; /* Плавный переход между эффектами */
 	}
 
@@ -142,7 +159,7 @@
 		margin-top: 10px; /* Отступ сверху заголовка */
 		margin-bottom: 10px; /* Отступ снизу заголовка */
 		font-size: 1.2em; /* Размер шрифта заголовка */
-		color: #0d4cd3; /* Цвет текста заголовка */
+		color: #0c6d0f; /* Цвет текста заголовка */
 		font-weight: bold; /* Полужирный текст */
 		text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Тень для текста заголовка */
 	}
