@@ -1,4 +1,6 @@
 <script>
+    import Header from "../Header.svelte";
+    import Footer from "../Footer.svelte";
 	// Создаем массив с федеральными мерами поддержки и их краткими описаниями.
 	const measures = [
 		{
@@ -58,7 +60,7 @@
 		}
 	];
 </script>
-
+<Header/>
 <div class="container">
 	<h1>Региональные меры поддержки в сфере IT</h1>
 	{#each measures as measure}
@@ -68,15 +70,20 @@
 		</div>
 	{/each}
 </div>
+<Footer/>
 
 <style>
 	.container {
         padding: 20px;
+        max-width: 2000px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
 	h1 {
 		text-align: center;
 		margin-bottom: 30px;
+        font-size: 25px;
 	}
 
 	.measure {
