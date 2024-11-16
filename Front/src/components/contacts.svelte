@@ -98,5 +98,3 @@
         </div>
     {/each}
 </div>
-
-<Footer />
