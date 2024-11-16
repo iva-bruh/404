@@ -14,8 +14,8 @@
         width: 100%;
         max-width: 400px; /* Максимальная ширина формы */
         margin: 0 auto; /* Центрируем форму по горизонтали */
-        margin-top: 10px;
-        margin-bottom: 10px;
+        margin-top: 30px;
+        margin-bottom: 20px;
     }
 
     h2 {
