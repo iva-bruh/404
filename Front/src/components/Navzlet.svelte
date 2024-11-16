@@ -1,5 +1,7 @@
 <script>
     // Вопросы для пользователей
+    let goal = "";
+    let parsedData = [];
     let questions = [
       {
         question: "Что для вас наиболее важно в работе?",
@@ -20,14 +22,70 @@
     let goals = [];
     
     // Функция для получения целей на основе ответов пользователя
-    function getGoals() {
+    async function getGoals() {
       goals = [];
       userAnswers.forEach((answer, index) => {
         if (answer) {
           goals.push(`Развивайте навык: ${answer}`);
         }
       });
+      try {
+        let response = await fetch("http://localhost:8000/neural_network", {
+          method: "POST", 
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            prompt: goal
+          })
+        })
+        let data = await response.json();
+        console.log(data)
+        console.log(data.message)
+        parsedData = parseGoals(data.message);
+        console.log(parsedData)
+      } catch(e) {
+        console.log(e);
+      }
     }
+
+    function parseGoals(input) {
+    if (typeof input !== 'string') {
+        throw new TypeError('Input must be a string');
+    }
+
+    const result = [];
+    let currentGoal = null;
+
+    // Регулярные выражения для поиска тегов
+    const goalRegex = /\[goal\](.*?)\[\/goal\]/g;
+    const subgoalRegex = /\[subgoal\](.*?)\[\/subgoal\]/g;
+
+    // Ищем все цели
+    const goals = input.match(goalRegex);
+
+    if (!goals) {
+        throw new Error('No valid goals found');
+    }
+
+    goals.forEach(goal => {
+        // Извлекаем текст цели
+        const goalTextMatch = goal.match(/^\[goal\](.*?)(?=\[subgoal\]|\[\/goal\])/);
+        const goalText = goalTextMatch ? goalTextMatch[1].trim() : null;
+
+        // Ищем все подцели внутри текущей цели
+        const subgoals = [...goal.matchAll(subgoalRegex)].map(match => match[1].trim());
+
+        if (goalText || subgoals.length > 0) {
+            result.push({
+                goal: goalText || 'Untitled Goal',
+                subgoals: subgoals
+            });
+        }
+    });
+
+    return result;
+}
   </script>
   
   <style>
@@ -78,6 +136,18 @@
         background-color: #1e90ff; /* Цвет выделенной опции */
         color: white;
     }
+    input {
+      border: 1px solid;
+      border-radius: 7px;
+      padding-left: 7px;
+    }
+    ul {
+      list-style: circle;
+      text-align: left;
+    }
+    li {
+      list-style: inside;
+    }
   </style>
   
   <div class="container">
@@ -94,18 +164,22 @@
     {/each}
 {/each}
 
-  
+    <input bind:value={goal}/>
     <button on:click={getGoals}>Получить цели</button>
   
-    {#if goals.length > 0}
-      <div class="goals">
-        <h2>Ваши цели:</h2>
-        <ul>
-          {#each goals as goal}
-            <li>{goal}</li>
-          {/each}
-        </ul>
-      </div>
-    {/if}
+    <ul>
+      {#each parsedData as { goal, subgoals }}
+          <li>
+              <strong>{goal}</strong>
+              {#if subgoals.length > 0}
+                  <ul>
+                      {#each subgoals as subgoal}
+                          <li>{subgoal}</li>
+                      {/each}
+                  </ul>
+              {/if}
+          </li>
+      {/each}
+  </ul>
   </div>
   

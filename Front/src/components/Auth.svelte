@@ -3,8 +3,27 @@
     let password = '';
     import Header from "./Header.svelte";
     import Footer from "./Footer.svelte";
+    import { isAuthenticated } from "../store.js";
+    import { onMount } from "svelte";
     let loggedIn = false;
-    import { redirect } from "@sveltejs/kit";
+    onMount( async () => {
+            try {
+                let response = await fetch("http://localhost:8000/auth/status", {
+                    credentials: "include",
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    isAuthenticated.set(data.authenticated);
+                } else {
+                    isAuthenticated.set(false);
+                }
+                if ($isAuthenticated) {
+                    window.location.href = "/"
+                }
+            } catch(e) {
+                console.log(e);
+            }
+        })
     let Auth = async () => {
         try {
             const formData = new FormData();
@@ -15,17 +34,15 @@
                 method: "POST",
                 body: formData
             })
-            let data = await response.json();
-            console.log(data);
             if (response.ok) {
                 loggedIn = true;
+                let data = await response.json();
+                console.log(data, loggedIn);
+                window.location.href = "/cabinet";
             }
 
         } catch (e) {
             console.log(e);
-        }
-        if (loggedIn) {
-            redirect(307, "/cabinet")
         }
     }
 </script>

@@ -6,6 +6,6 @@
 <div>
     <Header />
     <Navzlet />
-    <Footer isMainPage/>
+    <!-- <Footer isMainPage/> -->
 </div>
 

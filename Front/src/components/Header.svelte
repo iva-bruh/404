@@ -1,5 +1,4 @@
 <script>
-	import { goto } from "$app/navigation";
   import { isAuthenticated } from "../store.js";
   import { onMount } from "svelte";
   let isLogged = false;
@@ -19,6 +18,21 @@
       console.log(e);
     }
   })
+  let logout = async () => {
+    try {
+      let response = await fetch("http://localhost:8000/logout", {
+        method: "POST",
+        credentials: "include"
+      })
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data)
+        window.location.href = "/";
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
 </script>
 
 <header>
@@ -128,6 +142,7 @@
     <div class="auth-buttons">
 {#if isLogged}
       <a href="/cabinet" class="auth-button">Личный кабинет</a>
+      <a href="/" class="auth-button" on:click={logout}>Выход</a>
 {:else}
 <a href="/auth" class="auth-button">Вход</a>
       <a href="/reg" class="auth-button">Регистрация</a>

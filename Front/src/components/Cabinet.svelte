@@ -1,18 +1,38 @@
 <script>
-    import { redirect } from "@sveltejs/kit";
-    import { isAuthenticated } from "../store.js";
+    import { onMount } from "svelte";
     let user = {
-        name: "Иван Иванов",
-        email: "ivan.ivanov@example.com",
-        phone: "+7 (123) 456-78-90",
-        age: 28,
-        bio: "Привет! Я разработчик, который любит Svelte и всё связанное с веб-технологиями."
+        name: "",
+        email: "",
+        phone: "",
+        age: null,
+        bio: ""
     };
     let files = [];
     let achievements = [];
     let newAchievement = "";
     let message = "";
     let activeSection = 'info'; // Флаг для активного раздела
+    let editMode = false;
+    let editButtonText = "Редактировать"
+
+    onMount(async () => {
+        try {
+            let response = await fetch("http://localhost:8000/users/me", {
+                credentials: "include",
+                method: "GET"
+            })
+            if (response.ok) {
+                let data = await response.json()
+                user.name = data.name
+                user.email = data.email
+                user.phone = data.phone
+                user.age = data.age
+                user.bio = data.bio
+            }
+        } catch(e) {
+            console.log(e)
+        }
+    })
 
     const acceptedFileTypes = ["image/jpeg", "image/png", "application/pdf"];
 
@@ -61,6 +81,29 @@
 
     function setActiveSection(section) {
         activeSection = section; // Установить активный раздел
+    }
+    let editProfile = async () => {
+        editMode = !editMode
+        editButtonText = editMode ? "Сохранить" : "Редактировать"
+        if (!editMode) {
+            try {
+                let response = await fetch("http://localhost:8000/profileEdit", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                        },
+                    body: JSON.stringify({
+                        "email": user.email,
+                        "name": user.name,
+                        "phone": user.phone,
+                        "age": user.age,
+                        "bio": user.bio
+                    })
+                })
+            } catch (e) {
+                console.log(e)
+            }
+        }
     }
 </script>
 
@@ -123,7 +166,9 @@
     .info-item {
         margin: 5px 0;
     }
-
+    .info-item p {
+        height: 29.6px;
+    }
     input[type="file"], input[type="text"] {
         display: block;
         margin: 20px auto;
@@ -175,7 +220,26 @@
     .remove-button:hover {
         background-color: #992f0b;
     }
-
+    .editButton {
+        padding: 5px;
+        border-radius: 10px;
+        border: 1px solid;
+        border-color: #007FFF;
+        min-width: 120px;
+    }
+    .editButton p {
+        transform: translateY(-7%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    input {
+        width: 300px;
+        border-radius: 5px;
+        border: 1px solid;
+        padding: 2px;
+        padding-left: 5px;
+    }
     @media (max-width: 700px) {
         .sidebar {
             width: 100%; /* Полная ширина на маленьких экранах */
@@ -203,12 +267,22 @@
     {#if activeSection === 'info'}
         <div class="personal-info">
             <h2>Личная информация</h2>
-            <div class="info-item"><strong>Имя:</strong> {user.name}</div>
-            <div class="info-item"><strong>Email:</strong> {user.email}</div>
-            <div class="info-item"><strong>Телефон:</strong> {user.phone}</div>
-            <div class="info-item"><strong>Возраст:</strong> {user.age}</div>
-            <div class="info-item"><strong>О себе:</strong> {user.bio}</div>
+        {#if !editMode}
+            <div class="info-item"><strong>Имя:</strong><br /><p>{user.name == "" ? "Не введено" : user.name}</p></div>
+            <div class="info-item"><strong>Email:</strong><br /><p>{user.email == "" ? "Не введено" : user.email}</p></div>
+            <div class="info-item"><strong>Телефон:</strong><br /><p>{user.phone == "" ? "Не введено" : user.phone}</p></div>
+            <div class="info-item"><strong>Возраст:</strong><br /><p>{user.age != -1 ? user.age : "Не введено"}</p></div>
+            <div class="info-item"><strong>О себе:</strong><br /><p>{user.bio == "" ? "Не введено" : user.bio}</p></div>
+        {:else}
+            <div class="info-item"><strong>Имя:</strong><br /><input bind:value={user.name}/></div>
+            <div class="info-item"><strong>Email:</strong><br /><input bind:value={user.email}/></div>
+            <div class="info-item"><strong>Телефон:</strong><br /><input bind:value={user.phone}></div>
+            <div class="info-item"><strong>Возраст:</strong><br /><input bind:value={user.age}></div>
+            <div class="info-item"><strong>О себе:</strong><br /><input bind:value={user.bio}></div>
+        {/if}
+
         </div>
+        <button class="editButton" on:click={editProfile}><p>{editButtonText}</p></button>
     {:else if activeSection === 'files'}
         <h2>Загруженные файлы:</h2>
         <input type="file" accept=".jpeg, .jpg, .png, .pdf" on:change={handleFileUpload} multiple />
