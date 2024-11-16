@@ -77,4 +77,4 @@
         <button type="submit">Войти</button>
     </form>
 </div>
-<Footer />
+<Footer isMainPage="true"/>

@@ -1,4 +1,6 @@
 <script>
+	import { text } from "@sveltejs/kit";
+
   export let isMainPage = "false";
 </script>
 
@@ -13,24 +15,8 @@
       bottom: 0;
       width: 100%; 
       z-index: 2;
-    }
-  
-    .footer-links {
-      list-style: none;
-      padding: 0;
       display: flex;
       justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-  
-    .footer-links li {
-      margin: 0 15px;
-    }
-  
-    .footer-links a {
-      color: white;
-      text-decoration: none;
     }
   
     .copyright {

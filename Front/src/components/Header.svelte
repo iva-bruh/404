@@ -40,7 +40,7 @@
     .dropdown {
       display: none;
       position: absolute;
-      background-color: #444;
+      background-color: #333;
       border-radius: 5px;
       padding: 10px 0;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);

@@ -83,4 +83,4 @@
             <button type="submit">Зарегистрироваться</button>
         </form>
     </div>
-    <Footer />
+    <Footer isMainPage="true"/>
