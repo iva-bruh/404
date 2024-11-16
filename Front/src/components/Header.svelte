@@ -100,7 +100,7 @@
         </li>
         <li><a href="/about">О нас</a></li>
         <li><a href="/navzlet">"На взлёт!"</a></li>
-        <li><a href="/contact">Контакты</a></li>
+        <li><a href="/contacts">Контакты</a></li>
       </ul>
     </nav>
     <div class="auth-buttons">

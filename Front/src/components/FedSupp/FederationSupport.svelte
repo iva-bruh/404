@@ -1,6 +1,6 @@
 <script>
-  import Header from "../Header.svelte";
-  import Footer from "../Footer.svelte";
+	import Header from '../Header.svelte';
+	import Footer from '../Footer.svelte';
 
   const measures = [
     {
@@ -159,12 +159,154 @@
 <Header />
 <h1>Федеральные меры поддержки в сфере IT</h1>
 <div class="container">
-  {#each measures as measure}
-    <div class="measure">
-      <img src={measure.image} alt={measure.title} />
-      <h2>{measure.title}</h2>
-      <p>{measure.description}</p>
-    </div>
-  {/each}
+	{#each measures as measure}
+		<div class="measure">
+			<img src={measure.image} alt={measure.title} />
+			<h2>{measure.title}</h2>
+			<p>{measure.description}</p>
+		</div>
+	{/each}
 </div>
 <Footer />
+<<<<<<< HEAD
+=======
+
+<style>
+	.container {
+		max-width: 1200px; /* Максимальная ширина контейнера */
+		margin: 0 auto; /* Центрирование контейнера */
+		padding: 30px 20px; /* Отступ для контейнера */
+		display: grid; /* Используем сетку */
+		grid-template-columns: repeat(4, 1fr); /* 4 равные колонки */
+		gap: 20px; /* Промежутки между элементами */
+		border-radius: 10px; /* Закругления контейнера */
+		background-color: #ffffff; /* Фон контейнера */
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Тень для контейнера */
+	}
+
+	h1 {
+		text-align: center;
+		margin-bottom: 30px;
+		font-size: 2em; /* Увеличенный размер */
+		font-weight: bold; /* Полужирное начертание заголовка */
+		color: #ffffff; /* Цвет заголовка */
+		padding: 10px;
+		background-color: #0d4cd3; /* Темный насыщенный синий цвет */
+		border-radius: 0 0 10px 10px; /*Закругление углов заголовка */
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Тень для заголовка */
+	}
+
+	.measure {
+		border-radius: 10px; /* Закругленные углы карточек */
+		overflow: hidden; /* Скрывать переполнение */
+		background-color: #ffffff; /* Белый фон для карточек */
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Тень для карточек */
+		transition: transform 0.3s; /* Плавный эффект при изменении масштаба */
+		position: relative; /* Для абсолютного позиционирования заголовка */
+		padding: 15px; /* Внутренние отступы карточки */
+		text-align: center; /* Выравнивание текста по центру */
+		border: 1px solid #e0e0e0; /* Легкая граница вокруг карточек */
+	}
+
+	.measure:hover {
+		transform: scale(1.05); /* Увеличение карточки при наведении */
+	}
+
+	img {
+		width: 100%; /* Растягиваем на всю ширину контейнера */
+		height: 200px; /* Автоматическая высота с сохранением пропорций */
+		max-height: 180px; /* Максимальная высота изображения */
+		object-fit: cover; /* Обрезка изображения для заполнения блока */
+		border-bottom: 4px solid #0d4cd3; /* Цветовая граница снизу изображения */
+		transition: filter 0.3s; /* Плавный переход между эффектами */
+	}
+
+	.measure:hover img {
+		filter: brightness(70%); /* Затемнение изображения при наведении */
+	}
+
+	.measure h2 {
+		margin-top: 10px; /* Отступ сверху заголовка */
+		margin-bottom: 10px; /* Отступ снизу заголовка */
+		font-size: 1.4em; /* Размер шрифта заголовка */
+		color: #0d4cd3; /* Цвет текста заголовка */
+		font-weight: bold; /* Полужирный текст */
+		text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Тень для текста заголовка */
+	}
+
+	.measure p {
+		font-size: 0.95em; /* Размер шрифта для описания */
+		color: #555; /* Цвет текста описания */
+		line-height: 1.5; /* Высота строки для лучшей читаемости */
+		margin: 0; /* Убираем отступы */
+	}
+	.container {
+		max-width: 1200px; /* Максимальная ширина контейнера */
+		margin: 0 auto; /* Центрирование контейнера */
+		padding: 30px 20px; /* Отступ для контейнера */
+		display: grid; /* Используем сетку */
+		grid-template-columns: repeat(4, 1fr); /* 4 равные колонки */
+		gap: 20px; /* Промежутки между элементами */
+		border-radius: 10px; /* Закругления контейнера */
+		background-color: #ffffff; /* Фон контейнера */
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Тень для контейнера */
+	}
+
+	h1 {
+		text-align: center;
+		margin-bottom: 30px;
+		font-size: 2em; /* Увеличенный размер */
+		font-weight: bold; /* Полужирное начертание заголовка */
+		color: #ffffff; /* Цвет заголовка */
+		padding: 10px;
+		background-color: #0d4cd3; /* Темный насыщенный синий цвет */
+		border-radius: 0 0 10px 10px; /*Закругление углов заголовка */
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Тень для заголовка */
+	}
+
+	.measure {
+		border-radius: 10px; /* Закругленные углы карточек */
+		overflow: hidden; /* Скрывать переполнение */
+		background-color: #ffffff; /* Белый фон для карточек */
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Тень для карточек */
+		transition: transform 0.3s; /* Плавный эффект при изменении масштаба */
+		position: relative; /* Для абсолютного позиционирования заголовка */
+		padding: 15px; /* Внутренние отступы карточки */
+		text-align: center; /* Выравнивание текста по центру */
+		border: 1px solid #e0e0e0; /* Легкая граница вокруг карточек */
+	}
+
+	.measure:hover {
+		transform: scale(1.05); /* Увеличение карточки при наведении */
+	}
+
+	img {
+		width: 100%; /* Растягиваем на всю ширину контейнера */
+		height: 200px; /* Автоматическая высота с сохранением пропорций */
+		max-height: 180px; /* Максимальная высота изображения */
+		object-fit: cover; /* Обрезка изображения для заполнения блока */
+		border-bottom: 4px solid #0d4cd3; /* Цветовая граница снизу изображения */
+		transition: filter 0.3s; /* Плавный переход между эффектами */
+	}
+
+	.measure:hover img {
+		filter: brightness(70%); /* Затемнение изображения при наведении */
+	}
+
+	.measure h2 {
+		margin-top: 10px; /* Отступ сверху заголовка */
+		margin-bottom: 10px; /* Отступ снизу заголовка */
+		font-size: 1.4em; /* Размер шрифта заголовка */
+		color: #0d4cd3; /* Цвет текста заголовка */
+		font-weight: bold; /* Полужирный текст */
+		text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Тень для текста заголовка */
+	}
+
+	.measure p {
+		font-size: 0.95em; /* Размер шрифта для описания */
+		color: #555; /* Цвет текста описания */
+		line-height: 1.5; /* Высота строки для лучшей читаемости */
+		margin: 0; /* Убираем отступы */
+	}
+</style>
+>>>>>>> b40df59866f94ca6ceb18d7948eed4b9aff0e59f

@@ -9,11 +9,10 @@
       background-color: #333;
       color: white;
       text-align: center;
-      /* position: fixed; Фиксированное положение */
-      left: 0; /* Прилепить к левому краю */
-      bottom: 0; /* Прилепить к нижнему краю */
-      width: 100%; /* Занимать всю ширину */
-      z-index: 2; /* Убедиться, что футер находится наверху других элементов */
+      left: 0;
+      bottom: 0;
+      width: 100%; 
+      z-index: 2;
     }
   
     .footer-links {
