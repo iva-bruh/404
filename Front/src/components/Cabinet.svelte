@@ -7,13 +7,36 @@
         age: null,
         bio: ""
     };
+    let file;
     let files = [];
+    let validFiles = []
     let achievements = [];
     let newAchievement = "";
     let message = "";
     let activeSection = 'info'; // Флаг для активного раздела
     let editMode = false;
     let editButtonText = "Редактировать"
+
+    async function uploadFile() {
+        if (!file) {
+            return;
+        }
+
+        const formData = new FormData()
+        formData.append("file", file);
+
+        try {
+            const response = await fetch("http://localhost:8000/upload", {
+                method: "POST",
+                credentials: "include",
+                body: formData
+            })
+            let data = await response.json()
+            console.log(data)
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     onMount(async () => {
         try {
@@ -32,6 +55,22 @@
         } catch(e) {
             console.log(e)
         }
+        try {
+            let response = await fetch("http://localhost:8000/download_all_by_email", {
+                credentials: "include",
+                method: "GET",
+            })
+            if (response.ok) {
+                let data = await response.json()
+                console.log(data)
+                for(let i = 0; i < data.length; i++) {
+                    files.push(data[i].filename_at_upload)
+                }
+                console.log(files)
+            }
+        } catch(e) {
+            console.log(e)
+        }
     })
 
     const acceptedFileTypes = ["image/jpeg", "image/png", "application/pdf"];
@@ -43,23 +82,20 @@
         }
         return true;
     }
-
     function handleFileUpload(event) {
-        const selectedFiles = Array.from(event.target.files);
-        const validFiles = [];
-
-        selectedFiles.forEach(file => {
-            if (validateFile(file)) {
-                validFiles.push(file);
-                message = "Файл успешно загружен!";
-            } else {
-                message = "Ошибка: " + file.name;
-            }
-        });
-
-        files = [...files, ...validFiles];
-        event.target.value = ""; // Сбросить выбор файла
+    file = event.target.files[0]; // Сохраняем первый выбранный файл
+    if (!file) {
+        message = "Файл не выбран!";
+        return;
     }
+
+    if (validateFile(file)) {
+        message = `Выбран файл: ${file.name}`;
+    } else {
+        message = "Некорректный формат файла.";
+        file = null;
+    }
+}
 
     function removeFile(fileToRemove) {
         files = files.filter(file => file !== fileToRemove);
@@ -80,8 +116,9 @@
     }
 
     function setActiveSection(section) {
-        activeSection = section; // Установить активный раздел
+        activeSection = section; 
     }
+
     let editProfile = async () => {
         editMode = !editMode
         editButtonText = editMode ? "Сохранить" : "Редактировать"
@@ -285,8 +322,8 @@
         <button class="editButton" on:click={editProfile}><p>{editButtonText}</p></button>
     {:else if activeSection === 'files'}
         <h2>Загруженные файлы:</h2>
-        <input type="file" accept=".jpeg, .jpg, .png, .pdf" on:change={handleFileUpload} multiple />
-        
+        <input type="file" bind:this={file} on:change={handleFileUpload} />
+        <button on:click={uploadFile}>Загрузить</button>
         {#if message}
             <p class="message">{message}</p>
         {/if}
@@ -294,7 +331,7 @@
         <ul class="file-list">
             {#each files as file}
                 <li class="file-item">
-                    {file.name}
+                    {file}
                     <button class="remove-button" on:click={() => removeFile(file)}>Удалить</button>
                 </li>
             {/each}

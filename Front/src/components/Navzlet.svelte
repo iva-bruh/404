@@ -2,6 +2,7 @@
     // Вопросы для пользователей
     let goal = "";
     let parsedData = [];
+    let buttonVisible = true;
     let questions = [
       {
         question: "Что для вас наиболее важно в работе?",
@@ -23,6 +24,7 @@
     
     // Функция для получения целей на основе ответов пользователя
     async function getGoals() {
+      buttonVisible = false;
       goals = [];
       userAnswers.forEach((answer, index) => {
         if (answer) {
@@ -36,7 +38,8 @@
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            prompt: goal
+            prompt: goal,
+            answers: userAnswers
           })
         })
         let data = await response.json();
@@ -49,43 +52,29 @@
       }
     }
 
-    function parseGoals(input) {
-    if (typeof input !== 'string') {
-        throw new TypeError('Input must be a string');
-    }
-
+    function parseGoals(text) {
+    const regex = /\[(goal|subgoal)\](.*?)\[\/\1\]/gs;
+    const matches = [...text.matchAll(regex)];
     const result = [];
     let currentGoal = null;
 
-    // Регулярные выражения для поиска тегов
-    const goalRegex = /\[goal\](.*?)\[\/goal\]/g;
-    const subgoalRegex = /\[subgoal\](.*?)\[\/subgoal\]/g;
+    for (const match of matches) {
+        const [fullMatch, tag, content] = match;
+        const trimmedContent = content.trim();
 
-    // Ищем все цели
-    const goals = input.match(goalRegex);
-
-    if (!goals) {
-        throw new Error('No valid goals found');
-    }
-
-    goals.forEach(goal => {
-        // Извлекаем текст цели
-        const goalTextMatch = goal.match(/^\[goal\](.*?)(?=\[subgoal\]|\[\/goal\])/);
-        const goalText = goalTextMatch ? goalTextMatch[1].trim() : null;
-
-        // Ищем все подцели внутри текущей цели
-        const subgoals = [...goal.matchAll(subgoalRegex)].map(match => match[1].trim());
-
-        if (goalText || subgoals.length > 0) {
-            result.push({
-                goal: goalText || 'Untitled Goal',
-                subgoals: subgoals
-            });
+        if (tag === 'goal') {
+            currentGoal = [trimmedContent, []];
+            result.push(currentGoal);
+        } else if (tag === 'subgoal') {
+            if (currentGoal) {
+                currentGoal[1].push(trimmedContent);
+            }
         }
-    });
+    }
 
     return result;
 }
+
   </script>
   
   <style>
@@ -150,7 +139,7 @@
       list-style: circle;
       text-align: left;
     }
-    li {
+    ul ul {
       list-style: inside;
     }
   </style>
@@ -170,10 +159,12 @@
 {/each}
 
     <input bind:value={goal}/>
-    <button on:click={getGoals}>Получить цели</button>
+    {#if buttonVisible}
+      <button on:click={getGoals}>Получить цели</button>
+    {/if}
   
     <ul>
-      {#each parsedData as { goal, subgoals }}
+      {#each parsedData as [goal, subgoals]}
           <li>
               <strong>{goal}</strong>
               {#if subgoals.length > 0}
