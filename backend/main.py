@@ -1,8 +1,8 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Request, Response
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, Depends, HTTPException, status, Request, Response, File, UploadFile
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, update
+from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from passlib.context import CryptContext
@@ -10,6 +10,9 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from typing import Optional
 import neural_network
+import uuid
+import os
+import shutil
 
 
 
@@ -22,6 +25,15 @@ DATABASE_URL = "postgresql://postgres:root@localhost:5432/postgres"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+
+class Files(Base):
+    __tablename__ = "files"
+
+    id = Column(Integer, primary_key=True, index=True)
+    generated_filename = Column(String)
+    filename_at_upload = Column(String)
+    user = Column(String)
+
 
 class User(Base):
     __tablename__ = "users"
@@ -46,6 +58,8 @@ def db_create():
     print("Databases dropped")
     Base.metadata.create_all(bind=engine)
     print("Databases created")
+
+db_create()
 
 
 from pydantic import BaseModel, EmailStr
@@ -275,3 +289,39 @@ def profile_edit(user_info: UserProfileEdit, db: Session = Depends(get_db)):
     user.bio = user_info.bio
     user.phone = user_info.phone
     db.commit()  
+
+@app.post("/upload")
+async def upload_file(file: UploadFile, request: Request, db = Depends(get_db)):
+    try:
+        access_token = request.cookies.get("access_token")
+        file_format = file.filename.split(".")[-1]
+        filename = str(uuid.uuid4())
+        file_path = os.path.join("imgs", filename + "." + file_format)
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        payload = jwt.decode(access_token, SECRET_KEY, algorithms=["HS256"])
+        user = payload.get("sub")
+        db.add(Files(generated_filename=f"{filename}.{file_format}", filename_at_upload=f"{file.filename}", user=user))
+        db.commit()
+        db.close()
+        return f"{filename}.{file_format}"
+    except Exception as e:
+        return { "error": f"An error has occured: {e}"}
+    
+@app.get("/download_all_by_email")
+async def files_by_email(request: Request, db = Depends(get_db)):
+    access_token = request.cookies.get("access_token")
+    try:
+        payload = jwt.decode(access_token, SECRET_KEY, algorithms=["HS256"])
+        user = payload.get("sub")
+        files = db.query(Files).filter(Files.user == user).all()
+        return files
+    except Exception as e:
+        return {"error": f"An error has occured: {e}"}
+
+@app.get("/download/{file_path:str}")
+async def get_file(file_path: str):
+    try:
+        return FileResponse("imgs/" + file_path)
+    except Exception as e:
+        return { "error": "An error has occured: {e}"}
