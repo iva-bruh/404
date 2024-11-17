@@ -9,15 +9,14 @@
   let height;
 
   const nodes = [];
-  const numNodes = 115; // Количество узлов
-  const maxDistance = 150; // Максимальное расстояние для соединения узлов
+  const numNodes = 115;
+  const maxDistance = 150; 
 
   function init() {
       ctx = canvas.getContext('2d');
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
 
-      // Создаем узлы с случайными позициями и скоростями
       for (let i = 0; i < numNodes; i++) {
           nodes.push({
               x: Math.random() * width,
@@ -33,7 +32,6 @@
   function draw() {
       ctx.clearRect(0, 0, width, height);
 
-      // Рисуем линии между узлами, если они находятся достаточно близко
       for (let i = 0; i < numNodes; i++) {
           for (let j = i + 1; j < numNodes; j++) {
               const dx = nodes[i].x - nodes[j].x;
@@ -50,16 +48,13 @@
           }
       }
 
-      // Обновляем позиции узлов и рисуем их
       for (let i = 0; i < numNodes; i++) {
           nodes[i].x += nodes[i].vx;
           nodes[i].y += nodes[i].vy;
 
-          // Отражаем узлы от краев экрана
           if (nodes[i].x < 0 || nodes[i].x > width) nodes[i].vx *= -1;
           if (nodes[i].y < 0 || nodes[i].y > height) nodes[i].vy *= -1;
 
-          // Рисуем узел
           ctx.beginPath();
           ctx.fillStyle = '#000';
           ctx.arc(nodes[i].x, nodes[i].y, 2, 0, Math.PI * 2);
@@ -115,14 +110,14 @@
     {
       title: "Международный IT-Форум",
       description: "XVI Международный IT-форум с участием стран БРИКС и ШОС.",
-      image: "images/forum.png", // замените на путь к вашей картинке
-      link: "https://itforum.admhmao.ru/2024/news/10781903/" // замените на ссылку на сайт мероприятия
+      image: "images/forum.png",
+      link: "https://itforum.admhmao.ru/2024/news/10781903/"
     },
     {
       title: "Хакатон",
       description: "Соревнование для разработчиков и дизайнеров.",
-      image: "images/DC.png", // замените на путь к вашей картинке
-      link: "https://digital.edro.su/main/info" // замените на ссылку на сайт мероприятия
+      image: "images/DC.png",
+      link: "https://digital.edro.su/main/info"
     }
   ];
 </script>
@@ -218,8 +213,7 @@
       border-radius: 15px;
       overflow: hidden;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-      /* Можно убрать backdrop-filter отсюда, если не нужно */
-      /* background-color и backdrop-filter перенесены в .slide */
+
   }
 
   .slides {
@@ -228,7 +222,7 @@
 
   .slide {
       min-width: 100%;
-      background-color: rgba(255, 255, 255, 0.001); /* Полупрозрачный фон */
+      background-color: rgba(255, 255, 255, 0.001);
       border-radius: 15px;
       padding: 20px;
       display: flex;
@@ -238,7 +232,7 @@
       position: relative;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       overflow: hidden;
-      backdrop-filter: blur(6px); /* Добавлено размытие фона */
+      backdrop-filter: blur(6px);
   }
 
   .slide img {
@@ -282,7 +276,7 @@
   .info {
       flex: 1;
       background: transparent;
-      background-color: rgba(255, 255, 255, 0.001); /* Полупрозрачный фон */
+      background-color: rgba(255, 255, 255, 0.001);
       border-radius: 15px;
       padding: 20px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -290,7 +284,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-      backdrop-filter: blur(6px); /* Добавлено размытие фона */
+      backdrop-filter: blur(6px);
   }
 
   .info h2 {
@@ -317,7 +311,7 @@
   .events {
       display: flex;
       /* flex-wrap: wrap; */
-      gap: 20px; /* Отступы между карточками событий */
+      gap: 20px;
   }
 
   .event-card {
@@ -325,13 +319,13 @@
       border-radius: 10px;
       overflow: hidden;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      width: calc(50% - 10px); /* Две карточки в ряд с отступами */
+      width: calc(50% - 10px);
       transition: transform 0.3s ease;
       /* height: 40%; */
   }
 
   .event-card:hover {
-      transform: scale(1.05); /* Увеличение карточки при наведении */
+      transform: scale(1.05);
   }
 
   .event-card img {

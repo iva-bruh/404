@@ -332,7 +332,7 @@
             {#each files as file}
                 <li class="file-item">
                     {file}
-                    <button class="remove-button" on:click={() => removeFile(file)}>Удалить</button>
+                    <!-- <button class="remove-button" on:click={() => removeFile(file)}>Удалить</button> -->
                 </li>
             {/each}
         </ul>
