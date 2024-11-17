@@ -48,6 +48,7 @@ def db_create():
     print("Databases created")
 
 
+
 from pydantic import BaseModel, EmailStr
 
 class UserBase(BaseModel):
